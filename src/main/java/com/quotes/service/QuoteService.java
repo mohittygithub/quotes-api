@@ -1,7 +1,7 @@
 package com.quotes.service;
 
 import com.quotes.model.Quote;
-import com.quotes.util.QuoteRequest;
+import com.quotes.dto.QuoteRequest;
 import com.quotes.repository.QuoteRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -17,6 +17,7 @@ public class QuoteService {
     }
 
     public Quote createQuote(QuoteRequest quoteRequest){
+        quoteRequest.testId();
         Quote quote =  mapQuoteRequestToQuote(quoteRequest);
         return quoteRepository.save(quote);
     }
