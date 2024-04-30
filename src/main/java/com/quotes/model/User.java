@@ -40,4 +40,8 @@ public class User extends TimeAudit {
     @JsonManagedReference(value = "author-quotes")
     private Set<Quote> quotes = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "user-likes")
+    private Set<Likes> likes = new HashSet<>();
+
 }

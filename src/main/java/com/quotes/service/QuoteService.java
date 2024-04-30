@@ -17,7 +17,6 @@ public class QuoteService {
     }
 
     public Quote createQuote(QuoteRequest quoteRequest){
-        quoteRequest.testId();
         Quote quote =  mapQuoteRequestToQuote(quoteRequest);
         return quoteRepository.save(quote);
     }

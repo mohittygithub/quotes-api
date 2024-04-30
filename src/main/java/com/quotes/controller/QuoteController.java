@@ -2,12 +2,14 @@ package com.quotes.controller;
 
 import com.quotes.dto.ApiResponse;
 import com.quotes.dto.QuoteRequest;
+import com.quotes.service.LikeService;
 import com.quotes.service.QuoteService;
 import com.quotes.util.Utility;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,10 +17,12 @@ import java.util.List;
 public class QuoteController {
 
     private final QuoteService quoteService;
+    private final LikeService likeService;
     private final Utility utility;
 
-    public QuoteController(QuoteService quoteService, Utility utility) {
+    public QuoteController(QuoteService quoteService, LikeService likeService, Utility utility) {
         this.quoteService = quoteService;
+        this.likeService = likeService;
         this.utility = utility;
     }
 
@@ -52,4 +56,11 @@ public class QuoteController {
     public ResponseEntity<ApiResponse> getQuotesByAuthorName(@PathVariable String name){
         return new ResponseEntity<>(new ApiResponse(utility.getUrlPath(),200, true, "", quoteService.getQuotesByAuthorName(name)), HttpStatus.OK);
     }
+
+    @GetMapping("/likes/{userId}/{quoteId}")
+    public ResponseEntity<ApiResponse> createLike(@PathVariable Long userId, @PathVariable Long quoteId){
+        likeService.createLike(userId, quoteId);
+        return new ResponseEntity<>(new ApiResponse(utility.getUrlPath(), 200, true,"", new ArrayList<>()), HttpStatus.OK);
+    }
+
 }

@@ -1,9 +1,13 @@
 package com.quotes.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.quotes.util.TimeAudit;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -28,4 +32,8 @@ public class Quote extends TimeAudit {
     @JoinColumn(name = "author_id")
     @JsonBackReference(value = "author-quotes")
     private User author;
+
+    @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "quote-likes")
+    private Set<Likes> likes = new HashSet<>();
 }
